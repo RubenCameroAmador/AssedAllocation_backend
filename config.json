@@ -1,4 +1,6 @@
 {
   "url-backend": "127.0.0.1",
-  "port": 9999
+  "port": 9999,
+  "data-db-connection": "mongodb+srv://adminISA:Conexiones2030@cluster0.r95sfx2.mongodb.net/?retryWrites=true&w=majority",
+  "name-db": "AssedAllocationBD"
 }

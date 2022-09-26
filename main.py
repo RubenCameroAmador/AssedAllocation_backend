@@ -11,24 +11,17 @@ from Routes.Pais import pais
 app = Flask(__name__)
 cors = CORS(app)
 
-ca = certifi.where()
+#ca = certifi.where()
 
-client = pymongo.MongoClient("mongodb+srv://adminISA:Conexiones2030@cluster0.r95sfx2.mongodb.net/?retryWrites=true&w=majority",tlsCAFile=ca)
-db = client.test
+#client = pymongo.MongoClient("mongodb+srv://adminISA:Conexiones2030@cluster0.r95sfx2.mongodb.net/?retryWrites=true&w=majority",tlsCAFile=ca)
+#db = client.test
 
-print(db)
-baseDatos = client["AssedAllocationBD"]
-print(baseDatos.list_collection_names())
+#print(db)
+#baseDatos = client["AssedAllocationBD"]
+#print(baseDatos.list_collection_names())
 
 
 app.register_blueprint(pais)
-
-
-def loadFileConfig():
-    with open('config.json') as f:
-        data = json.load(f)
-    return data
-
 
 @app.route("/",methods=['GET'])
 def test():
@@ -36,6 +29,10 @@ def test():
     json["message"]="Server running ..."
     return jsonify(json)
 
+def loadFileConfig():
+    with open('config.json') as f:
+        data = json.load(f)
+    return data
 
 if __name__ == '__main__':
     dataConfig = loadFileConfig()
