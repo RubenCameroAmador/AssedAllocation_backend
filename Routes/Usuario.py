@@ -12,3 +12,12 @@ def createUser():
 @usuario.route("/usuario", methods = ['GET'])
 def showAllUsers():
     return jsonify(cont.index())
+
+@usuario.route("/usuario/<string:id>", methods = ['GET'])
+def showByID(id):
+    return jsonify(cont.show(id))
+
+
+@usuario.route("/usuario/<string:id>", methods = ['DELETE'])
+def deleteByID(id):
+    return jsonify(cont.delete(id))

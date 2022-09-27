@@ -24,6 +24,23 @@ class ControladorUsuario():
         elUsuario = Usuario(self.repositorioUsuario.findById(id))
         return elUsuario.__dict__
 
+    def delete(self, id):
+        try:
+            elUsuario = Usuario(self.repositorioUsuario.findById(id))
+        except:
+            elUsuario = None
+        if(elUsuario is not None):
+            self.repositorioUsuario.delete(id)
+            return {
+                "status": "user deleted",
+                "message": "Usuario eliminado correctamente"
+            }
+        else:
+            return {
+                "status": "User not deleted",
+                "message": "El usuario no fue eliminado"
+            }
+
     def uniqueUser(self, nickName):
         usuarios = self.repositorioUsuario.findAll()
         for usuario in usuarios:
