@@ -7,6 +7,7 @@ from waitress import serve
 import pymongo as pymongo
 import certifi
 from Routes.Pais import pais
+from Routes.Categoria import categoria
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -22,6 +23,7 @@ cors = CORS(app)
 
 
 app.register_blueprint(pais)
+app.register_blueprint(categoria)
 
 @app.route("/",methods=['GET'])
 def test():

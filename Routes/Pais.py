@@ -9,6 +9,10 @@ pais = Blueprint('pais',__name__)
 def getPais():
     return jsonify(cont.index())
 
+@pais.route("/pais/<string:id>", methods=['GET'])
+def getPaisByID(id):
+    return jsonify(cont.show(id))
+
 @pais.route("/pais", methods = ['POST'])
 def createPais():
     data = request.get_json()
