@@ -8,3 +8,8 @@ resultado = Blueprint('resultado',__name__)
 @resultado.route("/resultado", methods = ['GET'])
 def getAllResults():
     return jsonify(cont.index())
+
+@resultado.route("/resultado", methods=['POST'])
+def createResult():
+    data = request.get_json()
+    return jsonify(cont.create(data))

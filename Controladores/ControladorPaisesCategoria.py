@@ -25,5 +25,5 @@ class ControladorPaisesCategorias():
         return self.repositorioPaisesCategorias.save(nuevoMix)
 
     def show(self, id):
-        elPaisCategoria = PaisCategoria(self.repositorioCategoria.findById(id))
+        elPaisCategoria = PaisCategoria(self.repositorioPaisesCategorias.findById(id))
         return elPaisCategoria.__dict__
