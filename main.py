@@ -1,12 +1,13 @@
 from flask import Flask
 from flask import jsonify
-from flask import request
 from flask_cors import CORS
 import json
 from waitress import serve
 from Routes.Pais import pais
 from Routes.Categoria import categoria
 from Routes.Usuario import usuario
+from Routes.PaisCategoria import paisCategoria
+from Routes.Resultado import resultado
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -14,6 +15,8 @@ cors = CORS(app)
 app.register_blueprint(pais)
 app.register_blueprint(categoria)
 app.register_blueprint(usuario)
+app.register_blueprint(paisCategoria)
+app.register_blueprint(resultado)
 
 @app.route("/",methods=['GET'])
 def test():
