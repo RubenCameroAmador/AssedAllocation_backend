@@ -8,6 +8,7 @@ from Routes.Categoria import categoria
 from Routes.Usuario import usuario
 from Routes.PaisCategoria import paisCategoria
 from Routes.Resultado import resultado
+from Routes.Modelo import modelo
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,6 +18,7 @@ app.register_blueprint(categoria)
 app.register_blueprint(usuario)
 app.register_blueprint(paisCategoria)
 app.register_blueprint(resultado)
+app.register_blueprint(modelo)
 
 @app.route("/",methods=['GET'])
 def test():
