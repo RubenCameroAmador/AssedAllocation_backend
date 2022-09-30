@@ -13,3 +13,8 @@ def getAllResults():
 def createResult():
     data = request.get_json()
     return jsonify(cont.create(data))
+
+@resultado.route("/resultadoValicacion", methods=['POST'])
+def resValidate():
+    data = request.get_json()
+    return jsonify(cont.validacionResultado(data))
