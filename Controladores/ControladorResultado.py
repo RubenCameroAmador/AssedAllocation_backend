@@ -4,6 +4,8 @@ from Modelos.Resultado import Resultado
 from Repositorios.RepositorioPaisesCategoria import RepositorioPaisesCategorias
 from Modelos.PaisCategoria import PaisCategoria
 
+from Controladores.ControladorModelo import ControladorModelo
+
 from datetime import datetime
 
 
@@ -11,6 +13,7 @@ class ControladorResultado():
     def __init__(self):
         self.repositorioResultado = RepositorioResultado()
         self.repositorioPaisCategoria = RepositorioPaisesCategorias()
+        self.controladorModelo = ControladorModelo()
 
     def index(self):
         return self.repositorioResultado.findAll()
@@ -19,7 +22,18 @@ class ControladorResultado():
         userID = "lo pido como parámetro"
         año_actividad = 2026  # sería el año de la actividad por si hay que definir
         fechayHora = self.getTime()
-        return "todo oka"
+        data.append({
+            "año": año_actividad,
+            "user": userID,
+            "time": fechayHora
+        })
+        calculo = self.controladorModelo.calculo(data)
+        if calculo["sucess"]:
+            return data
+        else:
+            return {
+                "msg": calculo["msg"]
+            }
     # Métodos
     def getTime(self):
         now = datetime.now()
@@ -65,21 +79,3 @@ class ControladorResultado():
                 "msg": "No fue asignado el total de las monedas"
             }
 
-    """
-    NO ES MUY OPTIMO, POR REVISAR
-    def transformacionJson(self, data):
-        resultado = self.validacionResultado(data)
-        json = {}
-        if resultado['sucess']:
-            for items in data:
-                category = items['categoria']
-                for item in items:
-                    if(item != "categoria"):
-                        id_paisCategoria = self.getPaisCategoria(item, category)
-                        elPaisCategoria = PaisCategoria(self.repositorioPaisCategoria.findById(id_paisCategoria))
-                        arreglo = {
-                            elPaisCategoria,
-                            items[item]
-                        }
-                print(arreglo)
-    """
