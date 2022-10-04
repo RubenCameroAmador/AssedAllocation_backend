@@ -1,35 +1,37 @@
 from Repositorios.RepositorioResultado import RepositorioResultado
 from Modelos.Resultado import Resultado
 
-from Repositorios.RepositorioPaisesCategoria import RepositorioPaisesCategorias
-from Modelos.PaisCategoria import PaisCategoria
+from Modelos.Usuario import Usuario
+from Repositorios.RepositorioUsuario import RepositorioUsuario
 
 from Controladores.ControladorModelo import ControladorModelo
-
 from datetime import datetime
 
 
 class ControladorResultado():
     def __init__(self):
         self.repositorioResultado = RepositorioResultado()
-        self.repositorioPaisCategoria = RepositorioPaisesCategorias()
+        self.repositorioUsuario = RepositorioUsuario()
         self.controladorModelo = ControladorModelo()
 
     def index(self):
         return self.repositorioResultado.findAll()
 
-    def create(self, data):
-        userID = "lo pido como parámetro"
-        año_actividad = 2026  # sería el año de la actividad por si hay que definir
-        fechayHora = self.getTime()
-        data.append({
-            "año": año_actividad,
-            "user": userID,
-            "time": fechayHora
-        })
+    def create(self, data, userID, activityTime):
+        elresultado = Resultado({})
+        elresultado.resultado = data
+        eluser = Usuario(self.repositorioUsuario.findById(userID))
+        elresultado.user = eluser
+        elresultado.time = self.getTime()
+        elresultado.añoActividad = activityTime
         calculo = self.controladorModelo.calculo(data)
         if calculo["sucess"]:
-            return data
+            try:  #Empanada trifasica
+                return self.repositorioResultado.save(elresultado)
+            except:
+                return {
+                    "msg": "Resultado guardado correctamente"
+                }
         else:
             return {
                 "msg": calculo["msg"]
@@ -48,34 +50,3 @@ class ControladorResultado():
             if paisCategoria["categoria"]["nombre"].upper() == category.upper() and paisCategoria["pais"]["nombre"].upper() == country.upper():
                 return paisCategoria["_id"]
         return None
-
-    def validacionResultado(self, data):
-        monedas_max = 100   #Monedas max del ejercicio
-        suma = 0
-        for items in data:
-            suma_category = 0
-            for item in items:
-                if item != "categoria":
-                    suma = suma + items[item]
-                    suma_category = suma_category + items[item]
-            if suma_category > monedas_max * 0.25:
-                return {
-                    "sucess": False,
-                    "msg": "El total de monedas excede el limite permitido",
-                    "negocio": f"{items['categoria']}"
-                }
-        if suma > monedas_max:
-            return {
-                "sucess": False,
-                "msg": "El total de items excede las monedas"
-            }
-        elif suma == monedas_max:  #Valida que el número de monedas enviadas sea igual al total
-            return {
-                "sucess": True
-            }
-        else:
-            return {
-                "sucess": False,
-                "msg": "No fue asignado el total de las monedas"
-            }
-

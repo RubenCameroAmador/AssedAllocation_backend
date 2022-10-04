@@ -5,16 +5,11 @@ cont = ControladorResultado()
 resultado = Blueprint('resultado',__name__)
 
 
-@resultado.route("/resultado", methods = ['GET'])
+@resultado.route("/resultado", methods=['GET'])
 def getAllResults():
     return jsonify(cont.index())
 
-@resultado.route("/resultado", methods=['POST'])
-def createResult():
+@resultado.route("/resultado/user/<string:userID>/year/<string:year>", methods=['POST'])
+def createResult(userID,year):
     data = request.get_json()
-    return jsonify(cont.create(data))
-
-@resultado.route("/resultadoValicacion", methods=['POST'])
-def resValidate():
-    data = request.get_json()
-    return jsonify(cont.validacionResultado(data))
+    return jsonify(cont.create(data, userID, year))

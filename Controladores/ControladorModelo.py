@@ -53,14 +53,22 @@ class ControladorModelo():
         #"colombia", "peru", "chile", "brasil", "bolivia", "panama", "EEUU"
         paises_monedas = [0,0,0,0,0,0,0] #suma total de cada país por moneda
         variacionPais = [0.5,0.5,0.5,0.5,0.5,0.5,0.5]  #% por país
+        porcentaje_monedas = [[0.5,0.5,0.5,0.5],
+                              [0.5,0.5,0.5,0.5],
+                              [0.5,0.5,0.5,0.5],
+                              [0.5,0.3,0.5,0.5],
+                              [0.5,0.5,0.5,0.5],
+                              [0.5,0.5,0.5,0.5],
+                              [0.5,0.5,0.5,0.5]]
         for items in data:
             category = items["categoria"]
             for item in items:
                 if item != "categoria":
-                    if items[item] > self.cant_monedas*0.5:
+                    money_porcentaje = porcentaje_monedas[self.pais_list.index(item)][self.negocio_list.index(category)]
+                    if items[item] > self.cant_monedas*money_porcentaje:
                         return {
                             "sucess": False,
-                            "msg": f"El pais {item} en el negocio {category} excede el 50% de monedas"
+                            "msg": f"El pais {item} en el negocio {category} excede el {money_porcentaje*100}% de monedas"
                         }
                     else:
                         paises_monedas[self.pais_list.index(item)] = paises_monedas[self.pais_list.index(item)]+items[item]
