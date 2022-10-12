@@ -1,1 +1,1 @@
-web: waitress-serve --port=9999 --call 'flask:app'
+web: gunicorn --bind 0.0.0.0:$PORT app:app
