@@ -1,1 +1,1 @@
-web: waitress-serve --port=9999 main:app
+web: gunicorn --bind 0.0.0.0:$PORT main:app
