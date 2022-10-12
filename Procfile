@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT --call 'flaskr:app'
+web: waitress-serve --port=$PORT --call 'flask:app'
