@@ -1,1 +1,1 @@
-web: gunicorn --bind 127.0.0.1:9999 app:app
+web: waitress-serve --port=$PORT website:app
