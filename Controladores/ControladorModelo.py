@@ -5,7 +5,6 @@ Matrices de tamaño: 4*7
 Columnas: Negocios
 Filas: Paises
 """
-
 class ControladorModelo():
     def __init__(self):
         self.m_riesgo_rentabilidad = np.array([[0.1,0.1,0.1,0.1],

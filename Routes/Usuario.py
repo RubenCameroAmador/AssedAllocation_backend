@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from Controladores.ControladorUsuario import ControladorUsuario
+import requests
 
 cont = ControladorUsuario()
 usuario = Blueprint("usuario",__name__)
@@ -21,3 +22,8 @@ def showByID(id):
 @usuario.route("/usuario/<string:id>", methods = ['DELETE'])
 def deleteByID(id):
     return jsonify(cont.delete(id))
+
+@usuario.route("/usuario/validar", methods = ['POST'])
+def validar():
+    data = request.get_json()
+    return (cont.validar(data))

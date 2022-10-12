@@ -41,6 +41,17 @@ class ControladorUsuario():
                 "message": "El usuario no fue eliminado"
             }
 
+    def validar(self, dataUser):
+        users = self.repositorioUsuario.findAll()
+        for user in users:
+            #Encontrar el usuario
+            if user["nickname"] == dataUser["nickname"]:
+                if(user["password"] == self.encrypt_string(dataUser["password"])):
+                    user["password"] = ""
+                    return user
+        return None
+
+
     def uniqueUser(self, nickName):
         usuarios = self.repositorioUsuario.findAll()
         for usuario in usuarios:
